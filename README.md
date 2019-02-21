@@ -14,3 +14,7 @@ The goal of this project is to develop a negotiating software agent that can com
 
 ## Project team members
 
+## Links
+
+[Link to Drive folder](https://drive.google.com/drive/folders/1OnypCEU5kikToIVbm9V_N_1j77maA1Rc?usp=sharing)
+
