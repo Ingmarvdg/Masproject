@@ -49,6 +49,12 @@ The single negotiation lasted 17 rounds and ended with an agreement where $u(a1)
 
 \subsection{Single negotiation between Boulware agent and Conceder agent}
 
-The single negotiation lasted 83 rounds and ended with an agreement where $u(b) = 0.975$ and $u(c) = 0.495$. The strategy of the boulware agent is to bid its maximum utility (u=1) up until the last rounds, where it slowly starts to concede. The strategy of the conceder agent is to begin bidding its maximum utility (u=1) and in subsequent rounds lower its utility until an agreement is reached. pareto optimal? Interesting findings?
+The single negotiation lasted 83 rounds and ended with an agreement where $u(b) = 0.975$ and $u(c) = 0.495$. The strategy of the boulware agent is to bid its maximum utility (u=1) up until the last rounds, where it slowly starts to concede. The strategy of the conceder agent is to begin bidding its maximum utility (u=1) and in subsequent rounds lower its utility until an agreement is reached (Figure \ref{fig:boulvsconcede}). A pareto optimal outcome is reached (distance to pareto = 0.000). In different negotiations with different preference profiles a pareto optimal outcome was also reached. The Boulware agent performs very well against the conceder agent because the conceder will keep lowering its utility until it finds an agreement, at the same time the Boulware agent can simply stick with its near-optimal utility. 
+
+\begin{figure}[h!]
+\centering
+\includegraphics[width=125mm]{boulvsconcede.png}
+\caption{\label{fig:boulvsconcede} Results graph of the negotiation between the Boulware agent vs the Conceder agent in Genius.}  
+\end{figure}
 
 \end{document}
