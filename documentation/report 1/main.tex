@@ -14,7 +14,7 @@
 }
 \usepackage[colorinlistoftodos]{todonotes}
 
-\title{Multi Agent Systems Report 1}
+\title{\vspace{-5em}Multi Agent Systems Report 1}
 
 \author{Andrea Scorza, Diego Staphorst, Erik Lokhorst, Ingmar van der Geest}
 
@@ -28,33 +28,36 @@ This is the first report for the negotiation agent project of Multi Agent System
 \end{abstract}
 
 \section{Computing the pareto efficient frontier}
-\begin{figure}[h!]
-\centering
-\includegraphics[width=125mm]{pareto_efficient.png}
-\caption{\label{fig:pareto_figure} Pareto efficient frontier including the bids generated with matplotlib in python 3.7. We used the preferences of party 1 and party 9}  
-\end{figure}
-To visualize the pareto efficient frontier, we manually calculated utility values for each preference in Excel. In Python we were able to manipulate the data so, to get all the possible bids and with \href{https://sirinnes.wordpress.com/2013/04/25/pareto-frontier-graphic-via-python/}{Pareto frontier graphic via python} we were able to visualize the bids and Pareto Frontier.
-\newpage
+
+To visualize the pareto efficient frontier, we manually calculated utility values for each preference in Excel. In Python we were able to manipulate the data so, to get all the possible bids and with \href{https://sirinnes.wordpress.com/2013/04/25/pareto-frontier-graphic-via-python/}{Pareto frontier graphic via python} we were able to visualize the bids and Pareto Frontier, see figure \ref{fig:Pareto efficient figure} in the supplementary figures, for the result.
+
 \section{Analysis of negotiations between various agents}
 
 \subsection{Single negotiation between two simple agents}
+The negotiation between two single agents, lasted 17 rounds and ended with an agreement where the utility gained by the agents was: $u(a1) = 0.777$ and $u(a2) = 0.510$. The strategy of both agents is to bid randomly until an agreement is reached, no optimisation of utility takes place see (Figure \ref{fig:Simple vs simple agents}) for the visualized negotiation. There was no pareto optimal outcome reached (distance to pareto = 0.199), if this would happen in this scenario it would be purely coincidental.
 
-The single negotiation lasted 17 rounds and ended with an agreement where $u(a1) = 0.777$ and $u(a2) = 0.510$. The strategy of both agents is to bid randomly until an agreement is reached, no optimisation of utility takes place (Figure \ref{fig:simplevssimple}). There is no pareto optimal outcome reached (distance to pareto = 0.199), if this would happen in this scenario it would be purely coincidental. See
+\subsection{Single negotiation between Boulware agent and Conceder agent}
+The negotiation lasted 83 rounds and ended with an agreement where $u(b) = 0.975$ and $u(c) = 0.495$. The strategy of the Boulware agent is to bid its maximum utility (u=1) up until the last rounds, where it slowly starts to concede. The strategy of the Conceder agent is to begin bidding its maximum utility (u=1) and in subsequent rounds lower its utility until an agreement is reached (Figure \ref{fig:Boulware vs Conceder agent}). A pareto optimal outcome is reached (distance to pareto = 0.000). In different negotiations with different preference profiles a pareto optimal outcome was also reached. The Boulware agent performs very well against the Conceder agent because the Conceder will keep lowering its utility until it finds an agreement, at the same time the Boulware agent can simply stick with its near-optimal utility. 
+\newpage
+\section{Supplementary figures}
+\begin{figure}[h!]
+\centering
+\includegraphics[width=125mm]{pareto_efficient.png}
+\caption{Pareto efficient frontier including the bids generated with matplotlib in python 3.7. We used the preferences of party 1 and party 9}
+\label{fig:Pareto efficient figure}
+\end{figure}
 
 \begin{figure}[h!]
 \centering
 \includegraphics[width=125mm]{simplevssimple.png}
-\caption{\label{fig:simplevssimple} Results graph of the negotiation between two simple agents in Genius.}  
+\caption{Results graph of the negotiation between two simple agents in Genius.}
+\label{fig:Simple vs simple agents}
 \end{figure}
-
-\subsection{Single negotiation between Boulware agent and Conceder agent}
-
-The single negotiation lasted 83 rounds and ended with an agreement where $u(b) = 0.975$ and $u(c) = 0.495$. The strategy of the boulware agent is to bid its maximum utility (u=1) up until the last rounds, where it slowly starts to concede. The strategy of the conceder agent is to begin bidding its maximum utility (u=1) and in subsequent rounds lower its utility until an agreement is reached (Figure \ref{fig:boulvsconcede}). A pareto optimal outcome is reached (distance to pareto = 0.000). In different negotiations with different preference profiles a pareto optimal outcome was also reached. The Boulware agent performs very well against the conceder agent because the conceder will keep lowering its utility until it finds an agreement, at the same time the Boulware agent can simply stick with its near-optimal utility. 
 
 \begin{figure}[h!]
 \centering
 \includegraphics[width=125mm]{boulvsconcede.png}
-\caption{\label{fig:boulvsconcede} Results graph of the negotiation between the Boulware agent vs the Conceder agent in Genius.}  
+\caption{Results graph of the negotiation between the Boulware agent vs the Conceder agent in Genius.}
+\label{fig:Boulware vs Conceder agent}
 \end{figure}
-
 \end{document}
