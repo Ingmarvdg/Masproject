@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<boaPartiesList>
+    <boaparties partyName="AgentEight">
+        <properties/>
+        <biddingStrategy>
+            <item classpath="negotiator.boaframework.offeringstrategy.anac2013.Fawkes_Offering"/>
+        </biddingStrategy>
+        <acceptanceStrategy>
+            <item classpath="negotiator.boaframework.acceptanceconditions.anac2013.AC_TheFawkes"/>
+        </acceptanceStrategy>
+        <opponentModel>
+            <parameters name="m" value="0.0"/>
+            <item classpath="negotiator.boaframework.opponentmodel.BayesianModel"/>
+        </opponentModel>
+        <omStrategy>
+            <item classpath="negotiator.boaframework.omstrategy.TheFawkes_OMS"/>
+        </omStrategy>
+    </boaparties>
+    <boaparties partyName="EG Group 8">
+        <properties/>
+        <biddingStrategy>
+            <parameters name="min" value="0.0"/>
+            <parameters name="max" value="0.99"/>
+            <parameters name="k" value="0.0"/>
+            <parameters name="e" value="1.0"/>
+            <item classpath="/Users/diego/Development/eclipse/Group8assignment/bin/MAS_Agent/Group8_BS.class"/>
+        </biddingStrategy>
+        <acceptanceStrategy>
+            <parameters name="a" value="1.0"/>
+            <parameters name="b" value="0.0"/>
+            <item classpath="/Users/diego/Development/eclipse/Group8assignment/bin/MAS_Agent/Group8_AS.class"/>
+        </acceptanceStrategy>
+        <opponentModel>
+            <parameters name="l" value="0.2"/>
+            <item classpath="/Users/diego/Development/eclipse/Group8assignment/bin/MAS_Agent/Group8_OM.class"/>
+        </opponentModel>
+        <omStrategy>
+            <item classpath="/Users/diego/Development/eclipse/Group8assignment/bin/MAS_Agent/Group8_OMS.class"/>
+        </omStrategy>
+    </boaparties>
+</boaPartiesList>
