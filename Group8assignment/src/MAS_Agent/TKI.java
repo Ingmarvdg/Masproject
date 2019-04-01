@@ -2,7 +2,9 @@ package MAS_Agent;
 
 import static org.junit.Assert.assertEquals;
 
+import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileReader;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -16,6 +18,40 @@ public class TKI {
 	public static ArrayList<Double> opponentBid = new ArrayList<Double>();
 	static double lastBidUtil;
 	public static ArrayList<Double> coopList = new ArrayList<Double>();
+	
+	@Test
+	public static void saveToFile() 
+	  throws IOException {
+	   
+	    File file1 = new File("print.txt");
+	    String path1 = file1.getAbsolutePath();
+	    Path path1bis = Paths.get(path1);
+	    
+	    File file2 = new File("final.txt");
+	    String path2 = file2.getAbsolutePath();
+	    Path path2bis = Paths.get(path2);
+	    
+	    String read1 = Files.readAllLines(path1bis).get(0);
+
+	    boolean empty = file2.exists() && file2.length() == 0;
+	    
+	    if (empty == true) {
+	    	byte[] strToBytes = read1.getBytes();
+		    Files.write(path2bis, strToBytes);
+	    }
+	    else {
+	    	BufferedReader reader = new BufferedReader(new FileReader("final.txt"));
+		    int lines = 0;
+		    while (reader.readLine() != null) lines++;
+		    reader.close();
+		    for (int x = 0; lines > x; x++) {
+		    	read1 = read1 + '\n' + Files.readAllLines(path2bis).get(x);
+		    }
+		    byte[] strToBytes = read1.getBytes();
+		    Files.write(path2bis, strToBytes);
+	    }
+	    
+	}
 	
 	
 	@Test

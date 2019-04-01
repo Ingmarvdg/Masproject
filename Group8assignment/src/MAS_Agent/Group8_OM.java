@@ -3,6 +3,7 @@
  */
 package MAS_Agent;
 
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
@@ -30,7 +31,9 @@ import genius.core.utility.EvaluatorDiscrete;
  *
  */
 public class Group8_OM extends TheFawkes_OM {
-
+	
+	TKI tki = new TKI();
+	
 	/*
 	 * the learning coefficient is the weight that is added each turn to the
 	 * issue weights which changed. It's a trade-off between concession speed
@@ -48,6 +51,16 @@ public class Group8_OM extends TheFawkes_OM {
 	@Override
 	public void init(NegotiationSession negotiationSession,
 			Map<String, Double> parameters){
+		
+		try {
+			tki.saveToFile();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			System.out.println("inside the second catch");
+		}
+		
+		
 		
 		this.negotiationSession = negotiationSession;
 		if (parameters != null && parameters.get("l") != null) {
