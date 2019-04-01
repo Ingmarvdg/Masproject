@@ -8,9 +8,9 @@ import genius.core.boaframework.NegotiationSession;
 import genius.core.boaframework.OMStrategy;
 import genius.core.boaframework.OfferingStrategy;
 import genius.core.boaframework.OpponentModel;
-import negotiator.boaframework.offeringstrategy.anac2012.TheNegotiatorReloaded.StrategyTypes;
-import negotiator.boaframework.offeringstrategy.anac2012.TheNegotiatorReloaded.TimeDependentFunction;
-import negotiator.boaframework.offeringstrategy.anac2012.TheNegotiatorReloaded.TimeManager;
+import MAS_Agent.help_components.TheNegotiatorReloaded.StrategyTypes;
+import MAS_Agent.help_components.TheNegotiatorReloaded.TimeDependentFunction;
+import MAS_Agent.help_components.TheNegotiatorReloaded.TimeManager;
 import negotiator.boaframework.opponentmodel.DefaultModel;
 import negotiator.boaframework.opponentmodel.IAMhagglerBayesianModel;
 
@@ -114,7 +114,7 @@ public class TheNegotiatorReloaded_Offering extends OfferingStrategy {
 
 	@Override
 	public BidDetails determineNextBid() {
-
+		
 		if (timeManager.checkEndOfWindow()) {
 			kalaiPoint = timeManager.getKalai();
 			opponentStrategy = timeManager.getOpponentStrategy();

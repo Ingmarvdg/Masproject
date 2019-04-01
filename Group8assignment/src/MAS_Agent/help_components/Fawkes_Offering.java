@@ -8,6 +8,7 @@ import java.util.List;
 import java.util.Map;
 import MAS_Agent.help_components.TheFawkes.TheFawkes_OM;
 import MAS_Agent.help_components.TheFawkes.TheFawkes_OMS;
+import MAS_Agent.help_components.TheFawkes.Fawkews_Math;
 
 import genius.core.bidding.BidDetails;
 import genius.core.boaframework.NegotiationSession;
@@ -16,7 +17,6 @@ import genius.core.boaframework.OfferingStrategy;
 import genius.core.boaframework.OpponentModel;
 import genius.core.boaframework.SortedOutcomeSpace;
 import genius.core.misc.Range;
-import negotiator.boaframework.offeringstrategy.anac2013.TheFawkes.Fawkews_Math;
 
 /**
  * Bidding Strategy

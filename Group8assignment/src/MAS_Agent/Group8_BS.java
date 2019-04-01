@@ -14,13 +14,11 @@ import java.util.Set;
 
 import MAS_Agent.help_components.CUHKAgent_Offering;
 import MAS_Agent.help_components.Fawkes_Offering;
-import MAS_Agent.help_components.HardHeaded_Offering;
 import MAS_Agent.help_components.TheNegotiatorReloaded_Offering;
 import genius.core.Bid;
 import genius.core.bidding.BidDetails;
 import genius.core.boaframework.BOAparameter;
 import genius.core.boaframework.NegotiationSession;
-import genius.core.boaframework.NoModel;
 import genius.core.boaframework.OMStrategy;
 import genius.core.boaframework.OfferingStrategy;
 import genius.core.boaframework.OpponentModel;
@@ -49,10 +47,9 @@ public class Group8_BS extends OfferingStrategy {
 	
 	/** Bidding strategies */
 	public List<OfferingStrategy> bid_methods = new ArrayList<OfferingStrategy>();
+	
+	/** Bidding weights for current bid */
 	public List<Double> bid_weights = new ArrayList<Double>();
-//	public Double[] bid_weights = new Double[3];
-
-//
 	
 	
 //	/**
@@ -67,19 +64,15 @@ public class Group8_BS extends OfferingStrategy {
 		this.opponentModel 		= model;
 		this.omStrategy 		= oms;
 
-		// Initiate bidding strategies
-//		bid_methods[0] = new CUHKAgent_Offering(negoSession, model, oms);
-//		bid_weights[0] = 0.25;
-		
-		
-		bid_methods.add(new CUHKAgent_Offering(negoSession, model, oms));
+		// Initiate bidding strategies		
+//		bid_methods.add(new CUHKAgent_Offering(negoSession, model, oms));
 		bid_methods.add(new Fawkes_Offering(negoSession, model, oms, parameters));
 		bid_methods.add(new TheNegotiatorReloaded_Offering(negoSession, model, oms));
-//		bid_methods.add(new HardHeaded_Offering(negoSession, model, oms, parameters));
-		
+
+		// Initiate bidding weights, this needs to be replaced by TKI	
+//		bid_weights.add(0.33);
 		bid_weights.add(0.33);
-		bid_weights.add(0.33);
-		bid_weights.add(0.33);
+		bid_weights.add(0.0);
 
 		this.e = parameters.get("e");
 
@@ -101,15 +94,7 @@ public class Group8_BS extends OfferingStrategy {
 		}
 		
 		outcomespace = new SortedOutcomeSpace(negotiationSession.getUtilitySpace());
-		negotiationSession.setOutcomeSpace(outcomespace);
-		
-		// PRINT AGENTS AND WEIGHTS
-		for (OfferingStrategy offeringStrategy : bid_methods) {
-            System.out.println(offeringStrategy); 
-
-		}
-
-		
+		negotiationSession.setOutcomeSpace(outcomespace);		
 	}
 
 	@Override
@@ -166,8 +151,8 @@ public class Group8_BS extends OfferingStrategy {
 			i++;
 		}
 		
+//		nextBid = new BidDetails(new Bid(negotiationSession.getDomain(), bid_to_determine), utilityGoal);
 		nextBid = new BidDetails(new Bid(negotiationSession.getDomain(), bid_to_determine), utilityGoal);
-
 		return nextBid;
 	}
 
@@ -199,6 +184,7 @@ public class Group8_BS extends OfferingStrategy {
 	 * @return double
 	 */
 	public double p(double t) {
+		
 		return Pmin + (Pmax - Pmin) * (1 - f(t));
 	}
 

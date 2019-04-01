@@ -3,6 +3,7 @@
  */
 package MAS_Agent;
 
+import java.io.IOException;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
@@ -22,7 +23,9 @@ import genius.core.boaframework.OpponentModel;
 public class Group8_AS extends AcceptanceStrategy {
 	private double a;
 	private double b;
-
+	
+	TKI tki = new TKI();
+	
 	/**
 	 * Empty constructor for the BOA framework.
 	 */
@@ -41,6 +44,7 @@ public class Group8_AS extends AcceptanceStrategy {
 	public void init(NegotiationSession negoSession, OfferingStrategy strat,
 			OpponentModel opponentModel, Map<String, Double> parameters)
 			throws Exception {
+		
 		this.negotiationSession = negoSession;
 		this.offeringStrategy = strat;
 
@@ -61,12 +65,33 @@ public class Group8_AS extends AcceptanceStrategy {
 
 	@Override
 	public Actions determineAcceptability() {
+		
 		double nextMyBidUtil = offeringStrategy.getNextBid()
 				.getMyUndiscountedUtil();
 		double lastOpponentBidUtil = negotiationSession.getOpponentBidHistory()
 				.getLastBidDetails().getMyUndiscountedUtil();
+		
+		
+		TKI.populate(lastOpponentBidUtil, nextMyBidUtil);
+		
+		try {
+			tki.print(1);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			System.out.println("inside the catch");
+		}
 
 		if (a * lastOpponentBidUtil + b >= nextMyBidUtil) {
+			//System.out.println("LASTOPPONENTBIDUTIK = " + lastOpponentBidUtil);
+			try {
+				tki.print(0);
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+				System.out.println("inside the catch");
+			}
+		
 			return Actions.Accept;
 		}
 		return Actions.Reject;
