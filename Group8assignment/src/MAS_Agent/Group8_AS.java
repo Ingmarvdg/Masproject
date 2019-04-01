@@ -44,6 +44,7 @@ public class Group8_AS extends AcceptanceStrategy {
 	public void init(NegotiationSession negoSession, OfferingStrategy strat,
 			OpponentModel opponentModel, Map<String, Double> parameters)
 			throws Exception {
+		
 		this.negotiationSession = negoSession;
 		this.offeringStrategy = strat;
 
@@ -64,7 +65,6 @@ public class Group8_AS extends AcceptanceStrategy {
 
 	@Override
 	public Actions determineAcceptability() {
-			
 		
 		double nextMyBidUtil = offeringStrategy.getNextBid()
 				.getMyUndiscountedUtil();
@@ -72,9 +72,10 @@ public class Group8_AS extends AcceptanceStrategy {
 				.getLastBidDetails().getMyUndiscountedUtil();
 		
 		
-		TKI.populate(lastOpponentBidUtil);
+		TKI.populate(lastOpponentBidUtil, nextMyBidUtil);
+		
 		try {
-			tki.print();
+			tki.print(1);
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -82,7 +83,15 @@ public class Group8_AS extends AcceptanceStrategy {
 		}
 
 		if (a * lastOpponentBidUtil + b >= nextMyBidUtil) {
-			tki.list_size(0);
+			//System.out.println("LASTOPPONENTBIDUTIK = " + lastOpponentBidUtil);
+			try {
+				tki.print(0);
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+				System.out.println("inside the catch");
+			}
+		
 			return Actions.Accept;
 		}
 		return Actions.Reject;

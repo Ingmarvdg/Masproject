@@ -16,7 +16,8 @@ import org.junit.Test;
 public class TKI {
 	
 	public static ArrayList<Double> opponentBid = new ArrayList<Double>();
-	static double lastBidUtil;
+	static double lastBidUtil; //this variable is referred to the last bid utility made by the opponent
+	static double myBidUtil; //this is referred to out last bid utility
 	public static ArrayList<Double> coopList = new ArrayList<Double>();
 	
 	@Test
@@ -31,57 +32,63 @@ public class TKI {
 	    String path2 = file2.getAbsolutePath();
 	    Path path2bis = Paths.get(path2);
 	    
-	    String read1 = Files.readAllLines(path1bis).get(0);
-
-	    boolean empty = file2.exists() && file2.length() == 0;
 	    
-	    if (empty == true) {
-	    	byte[] strToBytes = read1.getBytes();
-		    Files.write(path2bis, strToBytes);
-	    }
-	    else {
-	    	BufferedReader reader = new BufferedReader(new FileReader("final.txt"));
-		    int lines = 0;
-		    while (reader.readLine() != null) lines++;
-		    reader.close();
-		    for (int x = 0; lines > x; x++) {
-		    	read1 = read1 + '\n' + Files.readAllLines(path2bis).get(x);
+
+	    boolean empty2 = file2.exists() && file2.length() == 0;
+	    boolean empty1 = file2.exists() && file2.length() == 0;
+	    
+	    if(empty1 != true) {
+	    	String read1 = Files.readAllLines(path1bis).get(0);
+		    if (empty2 == true) {
+		    	byte[] strToBytes = read1.getBytes();
+			    Files.write(path2bis, strToBytes);
 		    }
-		    byte[] strToBytes = read1.getBytes();
-		    Files.write(path2bis, strToBytes);
+		    else {
+		    	BufferedReader reader = new BufferedReader(new FileReader("final.txt"));
+			    int lines = 0;
+			    while (reader.readLine() != null) lines++;
+			    reader.close();
+			    for (int x = 0; lines > x; x++) {
+			    	read1 = read1 + '\n' + Files.readAllLines(path2bis).get(x);
+			    }
+			    byte[] strToBytes = read1.getBytes();
+			    Files.write(path2bis, strToBytes);
+		    }
 	    }
 	    
 	}
 	
 	
 	@Test
-	public static void print() 
+	public static void print(int z) 
 	  throws IOException {
-	    String str = "Standard Deviation =" + standard_deviation() + "Average Cooperativness =" + average_cooperat();
-	 
-	    //Path path = Paths.get("/Users/andrea/eclipse-workspace/Group8assignment/src/MAS_Agent/print.txt");
-	    //Path path = Paths.get("./print.txt");
-	    //Path path = Paths.get(".", "./print.txt");
+		String str;
+		if (z == 0) { //this is the case we accept his bid
+		    str = "Last Bid Utility = " + lastBidUtil + "---Standard Deviation = " + standard_deviation() + "---Average Cooperativness = " + average_cooperat();
+
+		}
+		else { //here is the case he accepts our bid
+			str = "Last Bid Utility = " + myBidUtil + "---Standard Deviation = " + standard_deviation() + "---Average Cooperativness = " + average_cooperat();
+		}
+		
 	    File file = new File("print.txt");
 	    String path1 = file.getAbsolutePath();
 	    Path path = Paths.get(path1);
-	    //../myFile.txt
 
 	    byte[] strToBytes = str.getBytes();
 	 
 	    Files.write(path, strToBytes);
-	 
-	    //String read = Files.readAllLines(path).get(0);
-	    //assertEquals(str, read);
+	
 	}
 	
-	public static void populate(double lastOpponentBidUtil) {
+	public static void populate(double lastOpponentBidUtil, double nextMyBidUtil) {
 		lastBidUtil = lastOpponentBidUtil;
+		myBidUtil = nextMyBidUtil;
 		opponentBid.add(lastOpponentBidUtil);
 		
 		
 		if (opponentBid.isEmpty() != true) {
-			//populating the list of cooperativity value
+
 			coopList.add(TKI.currentbidcooperativeness());
 		}
 	}
@@ -134,9 +141,6 @@ public class TKI {
 	
 	public static double average_cooperat() {
 		double avgCoop = 0;
-		//if (opponentBid.isEmpty() != true) {
-			//we put this value [-1,1] in this list
-			//coopList.add(currentbidcooperativeness(lastBidUtil, opponentBid));
 			
 			//every time we calculate the average
 			int j;
@@ -145,9 +149,9 @@ public class TKI {
 	        }
 			//System.out.println("J = " + j);
 			return(avgCoop / coopList.size());
-		//}
-		////	return 0;
 	}
+
+
 
 	
 }
