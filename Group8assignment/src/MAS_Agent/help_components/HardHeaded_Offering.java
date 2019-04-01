@@ -74,11 +74,14 @@ public class HardHeaded_Offering extends OfferingStrategy {
 	@Override
 	public void init(NegotiationSession negotiationSession, OpponentModel model, OMStrategy oms,
 			Map<String, Double> parameters) throws Exception {
-		if (model instanceof DefaultModel) {
-			model = new HardHeadedFrequencyModel();
-			model.init(negotiationSession, null);
-			oms.setOpponentModel(model);
-		}
+//		if (model instanceof DefaultModel) {
+//			model = new HardHeadedFrequencyModel();
+//			model.init(negotiationSession, null);
+//			oms.setOpponentModel(model);
+//		}
+		model.init(negotiationSession, null);
+		oms.setOpponentModel(model);
+
 		initializeAgent(negotiationSession, model, oms);
 	}
 
