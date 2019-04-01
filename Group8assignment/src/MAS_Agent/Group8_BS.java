@@ -3,9 +3,11 @@
  */
 package MAS_Agent;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
@@ -46,8 +48,9 @@ public class Group8_BS extends OfferingStrategy {
 	private SortedOutcomeSpace outcomespace;
 	
 	/** Bidding strategies */
-	public OfferingStrategy[] bid_methods = new OfferingStrategy[3];
-	public Double[] bid_weights = new Double[3];
+	public List<OfferingStrategy> bid_methods = new ArrayList<OfferingStrategy>();
+	public List<Double> bid_weights = new ArrayList<Double>();
+//	public Double[] bid_weights = new Double[3];
 
 //
 	
@@ -65,22 +68,19 @@ public class Group8_BS extends OfferingStrategy {
 		this.omStrategy 		= oms;
 
 		// Initiate bidding strategies
-		bid_methods[0] = new CUHKAgent_Offering(negoSession, model, oms);
-		bid_weights[0] = 0.25;
+//		bid_methods[0] = new CUHKAgent_Offering(negoSession, model, oms);
+//		bid_weights[0] = 0.25;
 		
-		bid_methods[1] = new Fawkes_Offering(negoSession, model, oms, parameters);
-		bid_weights[1] = 0.25;
+		
+		bid_methods.add(new CUHKAgent_Offering(negoSession, model, oms));
+		bid_methods.add(new Fawkes_Offering(negoSession, model, oms, parameters));
+		bid_methods.add(new TheNegotiatorReloaded_Offering(negoSession, model, oms));
+//		bid_methods.add(new HardHeaded_Offering(negoSession, model, oms, parameters));
+		
+		bid_weights.add(0.33);
+		bid_weights.add(0.33);
+		bid_weights.add(0.33);
 
-//		bid_methods[2] = new HardHeaded_Offering(negoSession, model, oms, parameters);
-//		bid_weights[2] = 0.25;
-
-		bid_methods[2] = new TheNegotiatorReloaded_Offering(negoSession, model, oms);
-		bid_weights[2] = 0.25;
-		
-		
-						
-		System.out.println("heeye");
-		System.out.println("DOEEEI");
 		this.e = parameters.get("e");
 
 		if (parameters.get("k") != null)
@@ -129,61 +129,45 @@ public class Group8_BS extends OfferingStrategy {
 		double utilityGoal;
 		utilityGoal = p(time);
 
-//		 System.out.println("[e=" + e + ", Pmin = " +
-//		 BilateralAgent.round2(Pmin) + "] t = " + BilateralAgent.round2(time)
-//		 + ". Aiming for " + utilityGoal);
 
-		// if there is no opponent model available
-		
-//		HashMap<Issue, HashMap<Value, Double>> bids = new HashMap<Issue, HashMap<Value, Double>>();
-		for (OfferingStrategy offeringStrategy : bid_methods) {
-			
-		}
-		
-		HashMap<Issue, HashMap<Value, Double>> bids = new HashMap<Issue, HashMap<Value, Double>>();
-		HashMap<Value, Double> bid_with_weight = new HashMap<Value, Double>();
-		for (int i = 0; i < bid_methods.length; i++) {
-			OfferingStrategy agent_bs = bid_methods[i];
-			Double agent_weight = bid_weights[i];
+		// Pools all bids, separated in issues, with its value and determined
+		// weight for this bid per agent in the variable bids
+		HashMap<Issue, HashMap<Value, Double>> bids = new HashMap<Issue, HashMap<Value, Double>>();		
+		HashMap<Value, Double> bid_with_weight;
+		for (int i = 0; i < bid_methods.size(); i++) {
+			OfferingStrategy agent_bs = bid_methods.get(i);
+			Double agent_weight = bid_weights.get(i);
+			Bid agent_bid = agent_bs.determineNextBid().getBid();
 			for (Issue issue : negotiationSession.getIssues()) {
-				Value value_for_issue = agent_bs.determineNextBid().getBid().getValue(issue);
-				bid_with_weight.put(value_for_issue, agent_weight);
-				bids.put(issue, bid_with_weight);
-			}
-		}
-//		for (OfferingStrategy agent_bs : bid_methods) {
-//			System.out.println(agent_bs);
-//
-//			for (Issue issue : negotiationSession.getIssues()) {
-//				Double agent_weight = bid_methods.get(agent_bs);
-//				Value value_for_issue = agent_bs.determineNextBid().getBid().getValue(issue);
-//				bid_with_weight.put(value_for_issue, agent_weight);
-//				bids.put(issue, bid_with_weight);
-//			}
-//		}
-		
-		for (Entry<Issue, HashMap<Value, Double>> issue : bids.entrySet()) {
-			System.out.println(issue);
-			for (Entry<Value, Double> values_in_issue : issue.getValue().entrySet()) {
-				System.out.println(values_in_issue);
-			}
+				if (i == 0)
+					bid_with_weight = new HashMap<Value, Double>();
+				else 
+					bid_with_weight = bids.get(issue);
+				bid_with_weight.merge(agent_bid.getValue(issue), agent_weight, Double::sum);
+				bids.put(issue, bid_with_weight);	
+			}			
 		}
 
-		System.out.println("TEST");
-		
-//		HashMap<String, Integer> test = new HashMap<String, Integer>();
+
+		// Get issues with highest overall weight
+		// If multiple with same values randomly pick one
+		int i = 1;
+		HashMap<Integer, Value> bid_to_determine = new HashMap<>();
 		for (Issue issue : negotiationSession.getIssues()) {
-			System.out.println(issue);
-//			for (int i = 0; i < bids_by_methods.length; i++) {
-//				System.out.println(bids_by_methods[i].getBid().getValue(issue));
-//			}
+			Double max_weight = 0.0;
+			Value value_with_heighest_weight = null;
+			for (Entry<Value, Double> value_with_weight : bids.get(issue).entrySet()) {
+				if (max_weight < value_with_weight.getValue()) {
+					max_weight = value_with_weight.getValue();
+					value_with_heighest_weight = value_with_weight.getKey();
+				}
+			}
+			bid_to_determine.put(i, value_with_heighest_weight);
+			i++;
 		}
 		
-		if (opponentModel instanceof NoModel) {
-			nextBid = negotiationSession.getOutcomeSpace().getBidNearUtility(utilityGoal);
-		} else {
-			nextBid = omStrategy.getBid(outcomespace, utilityGoal);
-		}
+		nextBid = new BidDetails(new Bid(negotiationSession.getDomain(), bid_to_determine), utilityGoal);
+
 		return nextBid;
 	}
 
