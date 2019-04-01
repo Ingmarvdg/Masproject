@@ -3,6 +3,7 @@
  */
 package MAS_Agent;
 
+import java.io.IOException;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
@@ -22,7 +23,9 @@ import genius.core.boaframework.OpponentModel;
 public class Group8_AS extends AcceptanceStrategy {
 	private double a;
 	private double b;
-
+	
+	TKI tki = new TKI();
+	
 	/**
 	 * Empty constructor for the BOA framework.
 	 */
@@ -61,12 +64,25 @@ public class Group8_AS extends AcceptanceStrategy {
 
 	@Override
 	public Actions determineAcceptability() {
+			
+		
 		double nextMyBidUtil = offeringStrategy.getNextBid()
 				.getMyUndiscountedUtil();
 		double lastOpponentBidUtil = negotiationSession.getOpponentBidHistory()
 				.getLastBidDetails().getMyUndiscountedUtil();
+		
+		
+		TKI.populate(lastOpponentBidUtil);
+		try {
+			tki.print();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			System.out.println("inside the catch");
+		}
 
 		if (a * lastOpponentBidUtil + b >= nextMyBidUtil) {
+			tki.list_size(0);
 			return Actions.Accept;
 		}
 		return Actions.Reject;
