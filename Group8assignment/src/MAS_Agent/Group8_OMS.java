@@ -4,17 +4,14 @@
 package MAS_Agent;
 
 import java.util.ArrayDeque;
-import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import MAS_Agent.help_components.TheFawkes.TheFawkes_OMS;
 
 import genius.core.bidding.BidDetails;
 import genius.core.boaframework.NegotiationSession;
-import genius.core.boaframework.OMStrategy;
 import genius.core.boaframework.OpponentModel;
 
 /**
