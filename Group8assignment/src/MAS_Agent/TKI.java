@@ -2,6 +2,7 @@ package MAS_Agent;
 
 import static org.junit.Assert.assertEquals;
 
+import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -22,7 +23,13 @@ public class TKI {
 	  throws IOException {
 	    String str = "Standard Deviation =" + standard_deviation() + "Average Cooperativness =" + average_cooperat();
 	 
-	    Path path = Paths.get("/Users/andrea/eclipse-workspace/Group8assignment/src/MAS_Agent/print.txt");
+	    //Path path = Paths.get("/Users/andrea/eclipse-workspace/Group8assignment/src/MAS_Agent/print.txt");
+	    //Path path = Paths.get("./print.txt");
+	    //Path path = Paths.get(".", "./print.txt");
+	    File file = new File("print.txt");
+	    String path1 = file.getAbsolutePath();
+	    Path path = Paths.get(path1);
+	    //../myFile.txt
 
 	    byte[] strToBytes = str.getBytes();
 	 
@@ -105,5 +112,6 @@ public class TKI {
 		//}
 		////	return 0;
 	}
+
 	
 }
