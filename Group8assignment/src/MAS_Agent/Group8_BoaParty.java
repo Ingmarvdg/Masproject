@@ -50,7 +50,7 @@ public class Group8_BoaParty extends BoaParty
 		Map<String, Double> noparams = Collections.emptyMap();
 		Map<String, Double> osParams = new HashMap<String, Double>();
 		// Set the concession parameter "e" for the offering strategy to yield Boulware-like behavior
-		osParams.put("e", 0.02);
+		osParams.put("e", 0.2);
 		
 		// Initialize all the components of this party to the choices defined above
 		configure(ac, noparams, 
@@ -58,6 +58,7 @@ public class Group8_BoaParty extends BoaParty
 				om, noparams,
 				oms, noparams);
 		super.init(info);
+		((Group8_BS) os).setAbstractUtilitySpace(super.utilitySpace);
 	}
 
 

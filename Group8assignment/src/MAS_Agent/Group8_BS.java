@@ -25,6 +25,7 @@ import genius.core.boaframework.OpponentModel;
 import genius.core.boaframework.SortedOutcomeSpace;
 import genius.core.issue.Issue;
 import genius.core.issue.Value;
+import genius.core.utility.AbstractUtilitySpace;
 
 /**
  * @author Andrea Scorza, Diego Staphorst, Erik Lokhorst, Ingmar van der Geest
@@ -51,8 +52,15 @@ public class Group8_BS extends OfferingStrategy {
 	/** Bidding weights for current bid */
 	public List<Double> bid_weights = new ArrayList<Double>();
 	
+	/** Bidding utility space of current negotiation */
+	private AbstractUtilitySpace abstractUtilitySpace;
 	
-//	/**
+	
+public Group8_BS() {
+		// TODO Auto-generated constructor stub
+	}
+
+	//	/**
 //	 * Method which initializes the agent by setting all parameters. The
 //	 * parameter "e" is the only parameter which is required.
 //	 */
@@ -72,7 +80,7 @@ public class Group8_BS extends OfferingStrategy {
 		// Initiate bidding weights, this needs to be replaced by TKI	
 //		bid_weights.add(0.33);
 		bid_weights.add(0.33);
-		bid_weights.add(0.0);
+		bid_weights.add(0.33);
 
 		this.e = parameters.get("e");
 
@@ -103,10 +111,9 @@ public class Group8_BS extends OfferingStrategy {
 	}
 
 	/**
-	 * Simple offering strategy which retrieves the target utility and looks for
-	 * the nearest bid if no opponent model is specified. If an opponent model
-	 * is specified, then the agent return a bid according to the opponent model
-	 * strategy.
+	 * Offering strategy which retrieves the bids of multiple agents.
+	 * The function loops over all the bids and determines the values with
+	 * the highest weight.
 	 */
 	@Override
 	public BidDetails determineNextBid() {
@@ -133,7 +140,7 @@ public class Group8_BS extends OfferingStrategy {
 			}			
 		}
 
-
+		
 		// Get issues with highest overall weight
 		// If multiple with same values randomly pick one
 		int i = 1;
@@ -151,7 +158,9 @@ public class Group8_BS extends OfferingStrategy {
 			i++;
 		}
 		
-//		nextBid = new BidDetails(new Bid(negotiationSession.getDomain(), bid_to_determine), utilityGoal);
+		double utility_bid =  this.abstractUtilitySpace.getUtility(new Bid(negotiationSession.getDomain(), bid_to_determine));
+		System.out.println(utility_bid);
+		
 		nextBid = new BidDetails(new Bid(negotiationSession.getDomain(), bid_to_determine), utilityGoal);
 		return nextBid;
 	}
@@ -169,6 +178,7 @@ public class Group8_BS extends OfferingStrategy {
 	 * 
 	 * For e = 0 (special case), it will behave as a Hardliner.
 	 */
+	
 	public double f(double t) {
 		if (e == 0)
 			return k;
@@ -188,6 +198,9 @@ public class Group8_BS extends OfferingStrategy {
 		return Pmin + (Pmax - Pmin) * (1 - f(t));
 	}
 
+	public void setAbstractUtilitySpace(AbstractUtilitySpace abstractUtilitySpace) {
+		this.abstractUtilitySpace = abstractUtilitySpace;
+	}
 	public NegotiationSession getNegotiationSession() {
 		return negotiationSession;
 	}
@@ -199,7 +212,6 @@ public class Group8_BS extends OfferingStrategy {
 		set.add(new BOAparameter("k", 0.0, "Offset"));
 		set.add(new BOAparameter("min", 0.0, "Minimum utility"));
 		set.add(new BOAparameter("max", 0.99, "Maximum utility"));
-
 		return set;
 	}
 

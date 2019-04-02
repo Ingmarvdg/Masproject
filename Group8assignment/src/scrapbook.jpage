@@ -1,8 +1,0 @@
-
-
-HashMap<Integer, Double> bids = new HashMap<Integer, Double>();
-bids.merge(1, 2.0);
-bids.merge(1, 2.0);
-bids.merge(1, 2.0);
-
-Sytem.out.println(bids);
