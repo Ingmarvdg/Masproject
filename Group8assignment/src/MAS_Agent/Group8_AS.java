@@ -5,27 +5,37 @@ package MAS_Agent;
 
 import java.io.IOException;
 import java.util.HashSet;
+
 import java.util.Map;
 import java.util.Set;
 
+//import genius.core.Bid;
+//import genius.core.issue.Issue;
+//import genius.core.issue.IssueDiscrete;
+//import genius.core.issue.IssueReal;
 import genius.core.boaframework.AcceptanceStrategy;
 import genius.core.boaframework.Actions;
 import genius.core.boaframework.BOAparameter;
 import genius.core.boaframework.NegotiationSession;
 import genius.core.boaframework.OfferingStrategy;
 import genius.core.boaframework.OpponentModel;
+//import genius.core.utility.UtilitySpace;
+//import genius.core.utility.AdditiveUtilitySpace;
 
 /**
- * IN THIS VERSION I JUST COPIED AC_Next.java
- * @author Andrea Scorza, Diego Staphorst, Erik Lokhorst, Ingmar van der Geest
- *
+ * This Acceptance Condition will accept an opponent bid if the utility is
+ * higher than the bid the agent is ready to present.
+ * 
+ * Decoupling Negotiating Agents to Explore the Space of Negotiation Strategies
+ * T. Baarslag, K. Hindriks, M. Hendrikx, A. Dirkzwager, C.M. Jonker
+ * 
  */
 public class Group8_AS extends AcceptanceStrategy {
-	private double a;
-	private double b;
 	
 	TKI tki = new TKI();
 	
+	private double t;
+
 	/**
 	 * Empty constructor for the BOA framework.
 	 */
@@ -33,44 +43,49 @@ public class Group8_AS extends AcceptanceStrategy {
 	}
 
 	public Group8_AS(NegotiationSession negoSession, OfferingStrategy strat,
-			double alpha, double beta) {
+			double time) {
 		this.negotiationSession = negoSession;
 		this.offeringStrategy = strat;
-		this.a = alpha;
-		this.b = beta;
+		this.t = time;
 	}
 
 	@Override
 	public void init(NegotiationSession negoSession, OfferingStrategy strat,
 			OpponentModel opponentModel, Map<String, Double> parameters)
 			throws Exception {
-		
 		this.negotiationSession = negoSession;
 		this.offeringStrategy = strat;
-
-		if (parameters.get("a") != null || parameters.get("b") != null) {
-			a = parameters.get("a");
-			b = parameters.get("b");
+		double discount = 1.0;
+		
+		if (negoSession.getDiscountFactor() <= 1D
+				&& negoSession.getDiscountFactor() > 0D)
+			discount = negoSession.getDiscountFactor();
+		
+		if (parameters.get("t") != null) {
+			t = parameters.get("t");
 		} else {
-			a = 1;
-			b = 0;
+			t = .98;
 		}
 	}
 
 	@Override
 	public String printParameters() {
-		String str = "[a: " + a + " b: " + b + "]";
+		String str = "[t: " + t + "]";
 		return str;
 	}
 
 	@Override
 	public Actions determineAcceptability() {
+		double currentNegoTime = negotiationSession.getTime();
+		double timeWindow = 1 - currentNegoTime;
+		double t = 0.995;
+		double nextMyBidUtil = offeringStrategy.getNextBid().getMyUndiscountedUtil();
+		double lastOpponentBidUtil = negotiationSession.getOpponentBidHistory().getLastBidDetails().getMyUndiscountedUtil();
 		
-		double nextMyBidUtil = offeringStrategy.getNextBid()
-				.getMyUndiscountedUtil();
-		double lastOpponentBidUtil = negotiationSession.getOpponentBidHistory()
-				.getLastBidDetails().getMyUndiscountedUtil();
+		//System.out.println("TIME1 = " + timeWindow);
+
 		
+
 		
 		TKI.populate(lastOpponentBidUtil, nextMyBidUtil);
 		
@@ -81,9 +96,9 @@ public class Group8_AS extends AcceptanceStrategy {
 			e.printStackTrace();
 			System.out.println("inside the catch");
 		}
-
-		if (a * lastOpponentBidUtil + b >= nextMyBidUtil) {
-			//System.out.println("LASTOPPONENTBIDUTIK = " + lastOpponentBidUtil);
+		
+		if (lastOpponentBidUtil >= nextMyBidUtil) 
+		{
 			try {
 				tki.print(0);
 			} catch (IOException e) {
@@ -91,8 +106,27 @@ public class Group8_AS extends AcceptanceStrategy {
 				e.printStackTrace();
 				System.out.println("inside the catch");
 			}
-		
-			return Actions.Accept;
+			System.out.println("ACCEPT 1");
+			return Actions.Accept; 
+		}
+		else 
+		{
+				double bestBidLastWindow = negotiationSession.getOpponentBidHistory().filterBetweenTime(currentNegoTime - timeWindow, currentNegoTime)
+						.getBestBidDetails().getMyUndiscountedUtil();
+				if (currentNegoTime > t && lastOpponentBidUtil >= bestBidLastWindow)				
+					{
+					try {
+						tki.print(0);
+					} catch (IOException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+						System.out.println("inside the catch");
+					}
+					//System.out.println("TIME2 = " + timeWindow);
+
+					System.out.println("ACCEPT 2");
+					return Actions.Accept;
+					}
 		}
 		return Actions.Reject;
 	}
