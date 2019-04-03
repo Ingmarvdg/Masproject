@@ -92,7 +92,7 @@ public class Group8_BoaParty extends BoaParty
 	@Override
 	public String getDescription() 
 	{
-		return "Group8_Thotiana212";
+		return "Thotiana";
 	}
 
 	// All the rest of the agent functionality is defined by the components selected above, using the BOA framework
