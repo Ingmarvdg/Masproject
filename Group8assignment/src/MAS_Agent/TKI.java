@@ -32,10 +32,12 @@ public class TKI {
 	    String path2 = file2.getAbsolutePath();
 	    Path path2bis = Paths.get(path2);
 	    
+	    //System.out.println("path1 = " + path1 + "path2 = " + path2);
+	    
 	    
 
 	    boolean empty2 = file2.exists() && file2.length() == 0;
-	    boolean empty1 = file2.exists() && file2.length() == 0;
+	    boolean empty1 = file1.exists() && file1.length() == 0;
 	    
 	    if(empty1 != true) {
 	    	String read1 = Files.readAllLines(path1bis).get(0);
@@ -85,7 +87,7 @@ public class TKI {
 		lastBidUtil = lastOpponentBidUtil;
 		myBidUtil = nextMyBidUtil;
 		opponentBid.add(lastOpponentBidUtil);
-		
+		//System.out.println("opponent: " + lastBidUtil + "our bid = " + myBidUtil);
 		
 		if (opponentBid.isEmpty() != true) {
 
