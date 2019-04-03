@@ -103,10 +103,6 @@ public class Group8_AS extends AcceptanceStrategy {
 			System.out.println("ACCEPT 1");
 			return Actions.Accept;
 		} else {
-			System.out.println(currentNegoTime - timeWindow);
-			System.out.println(currentNegoTime);
-			System.out.println(negotiationSession.getOpponentBidHistory()
-					.filterBetweenTime(currentNegoTime - timeWindow, currentNegoTime).getBestBidDetails());
 			if (negotiationSession.getOpponentBidHistory()
 					.filterBetweenTime(currentNegoTime - timeWindow, currentNegoTime).getBestBidDetails() != null) {
 				double bestBidLastWindow = negotiationSession.getOpponentBidHistory()
@@ -123,7 +119,9 @@ public class Group8_AS extends AcceptanceStrategy {
 
 					return Actions.Accept;
 				}
-			}
+			} 
+//			else
+//				return Actions.Accept;
 		}
 		return Actions.Reject;
 	}

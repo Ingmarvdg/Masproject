@@ -10,7 +10,10 @@ import java.util.Map;
 import java.util.Map.Entry;
 
 import MAS_Agent.help_components.Fawkes_Offering;
+import MAS_Agent.help_components.Gahboninho_Offering;
+import MAS_Agent.help_components.NiceTitForTat_Offering;
 import MAS_Agent.help_components.TheNegotiatorReloaded_Offering;
+import MAS_Agent.help_components.Yushu_Offering;
 import genius.core.Bid;
 import genius.core.bidding.BidDetails;
 import genius.core.boaframework.NegotiationSession;
@@ -57,12 +60,16 @@ public Group8_BS() {
 		this.omStrategy 		= oms;
 
 		// Initiate bidding strategies		
-//		bid_methods.add(new CUHKAgent_Offering(negoSession, model, oms));
 		bid_methods.add(new Fawkes_Offering(negoSession, model, oms, parameters));
 		bid_methods.add(new TheNegotiatorReloaded_Offering(negoSession, model, oms));
+		bid_methods.add(new Gahboninho_Offering(negoSession, model, oms, parameters));
+		bid_methods.add(new Yushu_Offering(negoSession, model, oms, parameters));
+		bid_methods.add(new NiceTitForTat_Offering(negoSession, model, oms, parameters));
 
 		// Initiate bidding weights, this needs to be replaced by TKI	
-//		bid_weights.add(0.33);
+		bid_weights.add(0.33);
+		bid_weights.add(0.33);
+		bid_weights.add(0.33);
 		bid_weights.add(0.33);
 		bid_weights.add(0.33);
 
@@ -100,6 +107,7 @@ public Group8_BS() {
 				bids.put(issue, bid_with_weight);	
 			}			
 		}
+		System.out.println(bids);
 
 		
 		// Get issues with highest overall weight
