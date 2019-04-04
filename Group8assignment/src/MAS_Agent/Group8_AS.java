@@ -31,9 +31,9 @@ import genius.core.boaframework.OpponentModel;
  * 
  */
 public class Group8_AS extends AcceptanceStrategy {
-	
+
 	TKI tki = new TKI();
-	
+
 	private double t;
 
 	/**
@@ -42,25 +42,22 @@ public class Group8_AS extends AcceptanceStrategy {
 	public Group8_AS() {
 	}
 
-	public Group8_AS(NegotiationSession negoSession, OfferingStrategy strat,
-			double time) {
+	public Group8_AS(NegotiationSession negoSession, OfferingStrategy strat, double time) {
 		this.negotiationSession = negoSession;
 		this.offeringStrategy = strat;
 		this.t = time;
 	}
 
 	@Override
-	public void init(NegotiationSession negoSession, OfferingStrategy strat,
-			OpponentModel opponentModel, Map<String, Double> parameters)
-			throws Exception {
+	public void init(NegotiationSession negoSession, OfferingStrategy strat, OpponentModel opponentModel,
+			Map<String, Double> parameters) throws Exception {
 		this.negotiationSession = negoSession;
 		this.offeringStrategy = strat;
 		double discount = 1.0;
-		
-		if (negoSession.getDiscountFactor() <= 1D
-				&& negoSession.getDiscountFactor() > 0D)
+
+		if (negoSession.getDiscountFactor() <= 1D && negoSession.getDiscountFactor() > 0D)
 			discount = negoSession.getDiscountFactor();
-		
+
 		if (parameters.get("t") != null) {
 			t = parameters.get("t");
 		} else {
@@ -80,15 +77,13 @@ public class Group8_AS extends AcceptanceStrategy {
 		double timeWindow = 1 - currentNegoTime;
 		double t = 0.995;
 		double nextMyBidUtil = offeringStrategy.getNextBid().getMyUndiscountedUtil();
-		double lastOpponentBidUtil = negotiationSession.getOpponentBidHistory().getLastBidDetails().getMyUndiscountedUtil();
-		
-		//System.out.println("TIME1 = " + timeWindow);
+		double lastOpponentBidUtil = negotiationSession.getOpponentBidHistory().getLastBidDetails()
+				.getMyUndiscountedUtil();
 
-		
+		// System.out.println("TIME1 = " + timeWindow);
 
-		
 		TKI.populate(lastOpponentBidUtil, nextMyBidUtil);
-		
+
 		try {
 			tki.print(1);
 		} catch (IOException e) {
@@ -96,9 +91,8 @@ public class Group8_AS extends AcceptanceStrategy {
 			e.printStackTrace();
 			System.out.println("inside the catch");
 		}
-		
-		if (lastOpponentBidUtil >= nextMyBidUtil) 
-		{
+
+		if (lastOpponentBidUtil >= nextMyBidUtil) {
 			try {
 				tki.print(0);
 			} catch (IOException e) {
@@ -107,14 +101,14 @@ public class Group8_AS extends AcceptanceStrategy {
 				System.out.println("inside the catch");
 			}
 			System.out.println("ACCEPT 1");
-			return Actions.Accept; 
-		}
-		else 
-		{
-				double bestBidLastWindow = negotiationSession.getOpponentBidHistory().filterBetweenTime(currentNegoTime - timeWindow, currentNegoTime)
-						.getBestBidDetails().getMyUndiscountedUtil();
-				if (currentNegoTime > t && lastOpponentBidUtil >= bestBidLastWindow)				
-					{
+			return Actions.Accept;
+		} else {
+			if (negotiationSession.getOpponentBidHistory()
+					.filterBetweenTime(currentNegoTime - timeWindow, currentNegoTime).getBestBidDetails() != null) {
+				double bestBidLastWindow = negotiationSession.getOpponentBidHistory()
+						.filterBetweenTime(currentNegoTime - timeWindow, currentNegoTime).getBestBidDetails()
+						.getMyUndiscountedUtil();
+				if (currentNegoTime > t && lastOpponentBidUtil >= bestBidLastWindow) {
 					try {
 						tki.print(0);
 					} catch (IOException e) {
@@ -122,11 +116,12 @@ public class Group8_AS extends AcceptanceStrategy {
 						e.printStackTrace();
 						System.out.println("inside the catch");
 					}
-					//System.out.println("TIME2 = " + timeWindow);
 
-					System.out.println("ACCEPT 2");
 					return Actions.Accept;
-					}
+				}
+			} 
+//			else
+//				return Actions.Accept;
 		}
 		return Actions.Reject;
 	}
