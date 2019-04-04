@@ -1,3 +1,13 @@
+Last Bid Utility = 1.0---Standard Deviation = 0.07076412741209395---Average Cooperativness = 0.007175925925925937
+Last Bid Utility = 0.49464690002105177---Standard Deviation = 0.1706821643502002---Average Cooperativness = -0.034907796716241134
+Last Bid Utility = 0.49464690002105177---Standard Deviation = 0.1706821643502002---Average Cooperativness = -0.034907796716241134
+Last Bid Utility = 0.49464690002105177---Standard Deviation = 0.1706821643502002---Average Cooperativness = -0.034907796716241134
+Last Bid Utility = 0.49464690002105177---Standard Deviation = 0.1706821643502002---Average Cooperativness = -0.034907796716241134
+Last Bid Utility = 0.49464690002105177---Standard Deviation = 0.1706821643502002---Average Cooperativness = -0.034907796716241134
+Last Bid Utility = 0.49464690002105177---Standard Deviation = 0.1706821643502002---Average Cooperativness = -0.034907796716241134
+Last Bid Utility = 0.49464690002105177---Standard Deviation = 0.1706821643502002---Average Cooperativness = -0.034907796716241134
+Last Bid Utility = 0.9279255161862858---Standard Deviation = 0.1738023697810962---Average Cooperativness = -0.029022646245164523
+Last Bid Utility = 0.9279255161862858---Standard Deviation = 0.17581374339878716---Average Cooperativness = -0.02743405253144337
 Last Bid Utility = 0.7382820437475793---Standard Deviation = 0.177977344222957---Average Cooperativness = -0.025435715574414087
 Last Bid Utility = 0.7382820437475793---Standard Deviation = 0.177977344222957---Average Cooperativness = -0.025435715574414087
 Last Bid Utility = 1.0---Standard Deviation = 0.1814499452469004---Average Cooperativness = -0.017259151461684448

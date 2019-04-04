@@ -72,6 +72,7 @@ public Group8_BS() {
 		bid_weights.add(0.33);
 		bid_weights.add(0.33);
 		bid_weights.add(0.33);
+//		bid_weights.set
 
 		
 		outcomespace = new SortedOutcomeSpace(negotiationSession.getUtilitySpace());

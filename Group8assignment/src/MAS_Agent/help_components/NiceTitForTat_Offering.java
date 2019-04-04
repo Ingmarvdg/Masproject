@@ -95,8 +95,10 @@ public class NiceTitForTat_Offering extends OfferingStrategy {
 
 	@Override
 	public BidDetails determineNextBid() {
+		BidDetails opponentBidHistory = negotiationSession.getOpponentBidHistory().getLastBidDetails();
+		if (opponentBidHistory == null)
+			return negotiationSession.getMaxBidinDomain();
 		Bid opponentLastBid = negotiationSession.getOpponentBidHistory().getLastBidDetails().getBid();
-
 		if (!(opponentModel instanceof NoModel)) {
 			// If we have time, we receiveMessage the opponent model
 			if (omStrategy.canUpdateOM()) {
