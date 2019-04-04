@@ -76,20 +76,15 @@ public class Group8_BoaParty extends BoaParty
 				Bid bestBid = userModel.getBidRanking().getMaximalBid();
 				Bid worstBid = userModel.getBidRanking().getMinimalBid();
 				for(int p = 0; p < bidRanking.size() - 1; p++)
-					System.out.println(bidRanking.get(p));
-				System.out.println(highUtil);
-				System.out.println(lowUtil);
 				
 				for (IssueDiscrete i : issues)
 				{
 					if (bestBid.getValue(i) == worstBid.getValue(i)) //compare bestBid to worstBid
-						System.out.println(bestBid.getValue(i));
 						additiveUtilitySpaceFactory.setWeight(i, minWeight);  //if values are equal (between best and worst), set weight to 0.01
 					if (additiveUtilitySpaceFactory.getWeight(i) != minWeight)
 						nonZeroCounter++; // count the issues for which values weren't the same
 					if (additiveUtilitySpaceFactory.getWeight(i) == minWeight)
 						LowCounter += minWeight; // count issues for which values were the same
-					System.out.println(nonZeroCounter);
 				}
 				
 				// compute how much weight has been left to divide and distribute equally to remaining issues

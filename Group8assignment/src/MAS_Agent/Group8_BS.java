@@ -72,7 +72,9 @@ public class Group8_BS extends OfferingStrategy {
 		bid_methods.add(new Yushu_Offering(negoSession, model, oms, parameters));
 		bid_methods.add(new NiceTitForTat_Offering(negoSession, model, oms, parameters));
 
-		// Initiate bidding weights
+		// Initiate bidding weights, those weight are the static basic weight and were calculated outside genius
+		//Explanation in the report
+		
 		bid_weights.add(0.2);         //FAWKES
 		bid_weights.add(0.190416149); //NEGO
 		bid_weights.add(0.197129227); //GAHBO
@@ -83,8 +85,11 @@ public class Group8_BS extends OfferingStrategy {
 		outcomespace = new SortedOutcomeSpace(negotiationSession.getUtilitySpace());
 		negotiationSession.setOutcomeSpace(outcomespace);		
 	}
-
-
+	
+	//This method uses the TKI values, and the coefficient calculated before to 
+	//redistribute the weight of our panel member based on the opponent
+	//We decided to call this method after five rounds in order to have a minimum sufficient amount of data
+	
 	public void Weight() {
 
 		//calculation of the weights based on opponent
@@ -93,7 +98,10 @@ public class Group8_BS extends OfferingStrategy {
 		double[] sd_cut = new double[4];
 		double[] coop_cut = new double[4];
 		//bid_weights.set(0, 0.3);
-
+		
+		//Those are the coefficients calculated with the training data
+		//More info in the report
+		
 		sd_coeff[0] = 0.742159262; //NEGO
 		sd_coeff[1] = 1.105698694; //GABO
 		sd_coeff[2] = 1.46240313;  //YUSHU
@@ -115,14 +123,17 @@ public class Group8_BS extends OfferingStrategy {
 		coop_cut[3] = 0.775181624;
 
 		double[] x = new double[4];
-		double stand_dev = TKI.standard_deviation();
+		double stand_dev = TKI.standard_deviation(); //implementation of the value collected by the TKI
 		double avg_coop = TKI.average_cooperat();
-
+		
+		
 		for (int i = 0; i < 4 ; i++) {
 			x[i] = (sd_coeff[i] * stand_dev) + sd_cut[i];
 			double y = (coop_coeff[i] * avg_coop) + coop_cut[i];
 			x[i] = (x[i] + y) / 2;
 		}
+		
+		//Normalization of the weights
 		double Faw_avg = (x[0] + x[1] + x[2] + x[3]) / 4;
 		double sum = x[0] + x[1] + x[2] + x[3] + Faw_avg;
 		double coeff = 1 / sum;

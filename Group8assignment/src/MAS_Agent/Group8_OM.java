@@ -53,13 +53,15 @@ public class Group8_OM extends TheFawkes_OM {
 	public void init(NegotiationSession negotiationSession,
 			Map<String, Double> parameters){
 		
-		try {
+		//This method was called at the beginning of a negotiation, to take the previous value from the previous negotiation inside
+		//a temporary files and copy them in the final file, since we didn't find other ways to collect data once the negotiation session is closed
+		
+		/*try {
 			tki.saveToFile();
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-			System.out.println("inside the second catch");
-		}
+		}*/
 		
 		
 		

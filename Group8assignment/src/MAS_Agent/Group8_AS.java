@@ -110,27 +110,31 @@ public class Group8_AS extends AcceptanceStrategy {
 		double lastOpponentBidUtil = negotiationSession.getOpponentBidHistory().getLastBidDetails()
 				.getMyUndiscountedUtil();
 
-		// System.out.println("TIME1 = " + timeWindow);
 
 		TKI.populate(lastOpponentBidUtil, nextMyBidUtil);
-
-		try {
+		
+		// This was the call of the tki method print() which saved the value (final utility, standard deviation and cooperativness) inside the first file  
+		// the parameter != 0 (in this case 1) means that we didn't accept they're bid otherwise it would be one as we can see later
+		
+		/*try {
 			tki.print(1);
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-			System.out.println("inside the catch");
-		}
+		}*/
 
 		if (lastOpponentBidUtil >= nextMyBidUtil) {
-			try {
+			
+			//This is the same call as before with parameter 0 that override the previous call, only in case we accept the opponent bid.
+			//The default is set to != 0, since we can just check if we accept the opponent bid and not the contrary.
+			
+			/*try {
 				tki.print(0);
 			} catch (IOException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
-				System.out.println("inside the catch");
-			}
-			System.out.println("ACCEPT 1");
+			}*/
+			
 			return Actions.Accept;
 		} else {
 			if (negotiationSession.getOpponentBidHistory()
@@ -139,13 +143,12 @@ public class Group8_AS extends AcceptanceStrategy {
 						.filterBetweenTime(currentNegoTime - timeWindow, currentNegoTime).getBestBidDetails()
 						.getMyUndiscountedUtil();
 				if (currentNegoTime > t && lastOpponentBidUtil >= bestBidLastWindow) {
-					try {
+					/*try {
 						tki.print(0);
 					} catch (IOException e) {
 						// TODO Auto-generated catch block
 						e.printStackTrace();
-						System.out.println("inside the catch");
-					}
+					}*/
 
 					return Actions.Accept;
 				}
