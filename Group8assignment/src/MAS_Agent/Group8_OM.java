@@ -3,7 +3,6 @@
  */
 package MAS_Agent;
 
-import java.io.IOException;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;

@@ -9,7 +9,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 
-import MAS_Agent.help_components.Fawkes_Offering;
 import MAS_Agent.help_components.Gahboninho_Offering;
 import MAS_Agent.help_components.NiceTitForTat_Offering;
 import MAS_Agent.help_components.TKI;
@@ -66,7 +65,6 @@ public class Group8_BS extends OfferingStrategy {
 		this.omStrategy 		= oms;
 
 		// Initiate bidding strategies		
-		bid_methods.add(new Fawkes_Offering(negoSession, model, oms, parameters));
 		bid_methods.add(new TheNegotiatorReloaded_Offering(negoSession, model, oms));
 		bid_methods.add(new Gahboninho_Offering(negoSession, model, oms, parameters));
 		bid_methods.add(new Yushu_Offering(negoSession, model, oms, parameters));
@@ -75,7 +73,6 @@ public class Group8_BS extends OfferingStrategy {
 		// Initiate bidding weights, those weight are the static basic weight and were calculated outside genius
 		//Explanation in the report
 		
-		bid_weights.add(0.2);         //FAWKES
 		bid_weights.add(0.190416149); //NEGO
 		bid_weights.add(0.197129227); //GAHBO
 		bid_weights.add(0.242762364); //YUSHU
@@ -134,14 +131,12 @@ public class Group8_BS extends OfferingStrategy {
 		}
 		
 		//Normalization of the weights
-		double Faw_avg = (x[0] + x[1] + x[2] + x[3]) / 4;
-		double sum = x[0] + x[1] + x[2] + x[3] + Faw_avg;
+		double sum = x[0] + x[1] + x[2] + x[3];
 		double coeff = 1 / sum;
-		bid_weights.set(0, coeff * Faw_avg);
-		bid_weights.set(1, coeff * x[0]);
-		bid_weights.set(2, coeff * x[1]);
-		bid_weights.set(3, coeff * x[2]);
-		bid_weights.set(4, coeff * x[3]);
+		bid_weights.set(0, coeff * x[0]);
+		bid_weights.set(1, coeff * x[1]);
+		bid_weights.set(2, coeff * x[2]);
+		bid_weights.set(3, coeff * x[3]);
 
 	}
 	@Override
