@@ -1,4 +1,4 @@
-package MAS_Agent.help_components;
+package mas2019.group8.help_components;
 
 import java.util.Collections;
 import java.util.LinkedList;
@@ -15,7 +15,7 @@ import genius.core.boaframework.OMStrategy;
 import genius.core.boaframework.OfferingStrategy;
 import genius.core.boaframework.OpponentModel;
 import negotiator.boaframework.opponentmodel.DefaultModel;
-import MAS_Agent.help_components.Yushu.YushuSAS;
+import mas2019.group8.help_components.Yushu.YushuSAS;
 
 /**
  * This is the decoupled Offering Strategy for Nozomi (ANAC2010). The code was

@@ -1,4 +1,4 @@
-package MAS_Agent.help_components.TheNegotiatorReloaded;
+package mas2019.group8.help_components.TheNegotiatorReloaded;
 
 /**
  * Types of the opponent's strategy.

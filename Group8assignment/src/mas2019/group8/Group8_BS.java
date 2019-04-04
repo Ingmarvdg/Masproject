@@ -1,19 +1,18 @@
 /**
  * 
  */
-package MAS_Agent;
-
+package mas2019.group8;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 
-import MAS_Agent.help_components.Gahboninho_Offering;
-import MAS_Agent.help_components.NiceTitForTat_Offering;
-import MAS_Agent.help_components.TKI;
-import MAS_Agent.help_components.TheNegotiatorReloaded_Offering;
-import MAS_Agent.help_components.Yushu_Offering;
+import mas2019.group8.help_components.Gahboninho_Offering;
+import mas2019.group8.help_components.NiceTitForTat_Offering;
+import mas2019.group8.help_components.TKI;
+import mas2019.group8.help_components.TheNegotiatorReloaded_Offering;
+import mas2019.group8.help_components.Yushu_Offering;
 import genius.core.Bid;
 import genius.core.bidding.BidDetails;
 import genius.core.boaframework.NegotiationSession;

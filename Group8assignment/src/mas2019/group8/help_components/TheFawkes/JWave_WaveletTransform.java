@@ -1,4 +1,4 @@
-package MAS_Agent.help_components.TheFawkes;
+package mas2019.group8.help_components.TheFawkes;
 
 /**
  * @date 30 juin 2011 14:50:35

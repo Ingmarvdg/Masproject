@@ -1,4 +1,4 @@
-package MAS_Agent.help_components.TheNegotiatorReloaded;
+package mas2019.group8.help_components.TheNegotiatorReloaded;
 
 import genius.core.bidding.BidDetails;
 import genius.core.boaframework.NegotiationSession;

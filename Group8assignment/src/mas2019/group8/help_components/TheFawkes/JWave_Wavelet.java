@@ -14,7 +14,7 @@
  *
  * @author Christian Scheiblich date 23.02.2010 05:42:23 contact graetz@mailfish.de
  */
-package MAS_Agent.help_components.TheFawkes;
+package mas2019.group8.help_components.TheFawkes;
 
 /**
  * Basic class for one wavelet keeping coefficients of the wavelet function, the scaling function, the base wavelength,

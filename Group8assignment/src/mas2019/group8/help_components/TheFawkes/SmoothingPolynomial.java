@@ -1,4 +1,4 @@
-package MAS_Agent.help_components.TheFawkes;
+package mas2019.group8.help_components.TheFawkes;
 
 /*
  * Class:        Polynomial

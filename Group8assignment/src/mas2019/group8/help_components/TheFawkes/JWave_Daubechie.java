@@ -14,7 +14,7 @@
  *
  * @author Christian Scheiblich date 26.03.2010 07:35:31 contact graetz@mailfish.de
  */
-package MAS_Agent.help_components.TheFawkes;
+package mas2019.group8.help_components.TheFawkes;
 
 /**
  * Ingrid Daubechies' orthonormal wavelet of eight coefficients and the scales; normed, due to ||*||2 - euclidean norm.

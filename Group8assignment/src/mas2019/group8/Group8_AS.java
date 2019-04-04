@@ -1,15 +1,14 @@
 /**
  * 
  */
-package MAS_Agent;
-
+package mas2019.group8;
 import java.io.IOException;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import MAS_Agent.help_components.TKI;
+import mas2019.group8.help_components.TKI;
 import genius.core.Bid;
 //import genius.core.Bid;
 //import genius.core.issue.Issue;

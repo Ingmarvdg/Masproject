@@ -1,14 +1,14 @@
 /**
  * 
  */
-package MAS_Agent;
+package mas2019.group8;
 
 import java.util.ArrayDeque;
 import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import MAS_Agent.help_components.TheFawkes.TheFawkes_OMS;
+import mas2019.group8.help_components.TheFawkes.TheFawkes_OMS;
 
 import genius.core.bidding.BidDetails;
 import genius.core.boaframework.NegotiationSession;

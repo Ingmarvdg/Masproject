@@ -1,12 +1,11 @@
-package MAS_Agent;
-
+package mas2019.group8;
 import java.util.List;
 
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 
-import MAS_Agent.help_components.ExtensionUncertain;
+import mas2019.group8.help_components.ExtensionUncertain;
 import genius.core.Bid;
 import genius.core.boaframework.AcceptanceStrategy;
 import genius.core.boaframework.BoaParty;

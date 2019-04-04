@@ -1,7 +1,7 @@
 /**
  * 
  */
-package MAS_Agent;
+package mas2019.group8;
 
 import java.util.HashMap;
 import java.util.HashSet;
@@ -9,8 +9,8 @@ import java.util.Map;
 import java.util.Set;
 import java.util.Map.Entry;
 
-import MAS_Agent.help_components.TKI;
-import MAS_Agent.help_components.TheFawkes.TheFawkes_OM;
+import mas2019.group8.help_components.TKI;
+import mas2019.group8.help_components.TheFawkes.TheFawkes_OM;
  
 
 import genius.core.Bid;

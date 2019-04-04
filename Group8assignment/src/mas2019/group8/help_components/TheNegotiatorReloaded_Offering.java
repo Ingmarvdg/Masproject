@@ -1,4 +1,4 @@
-package MAS_Agent.help_components;
+package mas2019.group8.help_components;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -8,9 +8,9 @@ import genius.core.boaframework.NegotiationSession;
 import genius.core.boaframework.OMStrategy;
 import genius.core.boaframework.OfferingStrategy;
 import genius.core.boaframework.OpponentModel;
-import MAS_Agent.help_components.TheNegotiatorReloaded.StrategyTypes;
-import MAS_Agent.help_components.TheNegotiatorReloaded.TimeDependentFunction;
-import MAS_Agent.help_components.TheNegotiatorReloaded.TimeManager;
+import mas2019.group8.help_components.TheNegotiatorReloaded.StrategyTypes;
+import mas2019.group8.help_components.TheNegotiatorReloaded.TimeDependentFunction;
+import mas2019.group8.help_components.TheNegotiatorReloaded.TimeManager;
 import negotiator.boaframework.opponentmodel.DefaultModel;
 import negotiator.boaframework.opponentmodel.IAMhagglerBayesianModel;
 

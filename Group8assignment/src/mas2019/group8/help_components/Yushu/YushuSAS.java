@@ -1,4 +1,4 @@
-package MAS_Agent.help_components.Yushu;
+package mas2019.group8.help_components.Yushu;
 
 import java.util.LinkedList;
 import java.util.Random;
