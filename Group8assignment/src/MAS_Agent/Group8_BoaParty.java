@@ -73,20 +73,57 @@ public class Group8_BoaParty extends BoaParty
 	@Override
 	public AbstractUtilitySpace estimateUtilitySpace() 
 	{
-		AdditiveUtilitySpaceFactory additiveUtilitySpaceFactory = new AdditiveUtilitySpaceFactory(getDomain());
-		List<IssueDiscrete> issues = additiveUtilitySpaceFactory.getIssues();
-		for (IssueDiscrete i : issues)
-		{
-			additiveUtilitySpaceFactory.setWeight(i, rand.nextDouble());
-			for (ValueDiscrete v : i.getValues())
-				additiveUtilitySpaceFactory.setUtility(i, v, rand.nextDouble());
-		}
-		
-		// Normalize the weights, since we picked them randomly in [0, 1]
-		additiveUtilitySpaceFactory.normalizeWeights();
-		
-		// The factory is done with setting all parameters, now return the estimated utility space
-		return additiveUtilitySpaceFactory.getUtilitySpace();
+		// make use of extended class ExtensionUncertain to access weights
+				ExtensionUncertain additiveUtilitySpaceFactory = new ExtensionUncertain(getDomain());
+				List<IssueDiscrete> issues = additiveUtilitySpaceFactory.getIssues();
+				List<Bid> bidRanking = userModel.getBidRanking().getBidOrder();
+				double highUtil = userModel.getBidRanking().getHighUtility();
+				double lowUtil = userModel.getBidRanking().getLowUtility();
+				double nonZeroCounter = 0;
+				double LowCounter = 0;
+				double minWeight = 0.01;
+				Bid bestBid = userModel.getBidRanking().getMaximalBid();
+				Bid worstBid = userModel.getBidRanking().getMinimalBid();
+				for(int p = 0; p < bidRanking.size() - 1; p++)
+					System.out.println(bidRanking.get(p));
+				System.out.println(highUtil);
+				System.out.println(lowUtil);
+				
+				for (IssueDiscrete i : issues)
+				{
+					if (bestBid.getValue(i) == worstBid.getValue(i)) //compare bestBid to worstBid
+						System.out.println(bestBid.getValue(i));
+						additiveUtilitySpaceFactory.setWeight(i, minWeight);  //if values are equal (between best and worst), set weight to 0.01
+					if (additiveUtilitySpaceFactory.getWeight(i) != minWeight)
+						nonZeroCounter++; // count the issues for which values weren't the same
+					if (additiveUtilitySpaceFactory.getWeight(i) == minWeight)
+						LowCounter += minWeight; // count issues for which values were the same
+					System.out.println(nonZeroCounter);
+				}
+				
+				// compute how much weight has been left to divide and distribute equally to remaining issues
+				double nonZeroWeight = (1 - LowCounter) / nonZeroCounter; 
+				
+				for (IssueDiscrete i : issues)
+				{
+					if (additiveUtilitySpaceFactory.getWeight(i) != minWeight)
+						additiveUtilitySpaceFactory.setWeight(i, nonZeroWeight);
+					for (ValueDiscrete v : i.getValues())
+						if (bestBid.containsValue(i, v))
+							additiveUtilitySpaceFactory.setUtility(i, v, 10); //if the value is in the bestBid, give it 10 (highest value)
+						else if (worstBid.containsValue(i, v))
+							additiveUtilitySpaceFactory.setUtility(i, v, 1); // if the value is in the worstBid, give it 1 (lowest value)
+						else {
+							additiveUtilitySpaceFactory.setUtility(i, v, 5); // if the value is in neither the best or worst bid, give it an average value
+						}
+						
+				}
+				
+				// Normalize the weights, since we picked them randomly in [0, 1]
+				additiveUtilitySpaceFactory.normalizeWeights();
+				
+				// The factory is done with setting all parameters, now return the estimated utility space
+				return additiveUtilitySpaceFactory.getUtilitySpace();
 	}
 	
 	@Override

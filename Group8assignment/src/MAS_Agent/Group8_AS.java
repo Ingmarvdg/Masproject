@@ -73,6 +73,31 @@ public class Group8_AS extends AcceptanceStrategy {
 
 	@Override
 	public Actions determineAcceptability() {
+		// copied from AC_Uncertain to have our agent deal with preference uncertainty
+		Bid receivedBid = negotiationSession.getOpponentBidHistory()
+				.getLastBid();
+		Bid lastOwnBid = negotiationSession.getOwnBidHistory().getLastBid();
+		UserModel userModel = negotiationSession.getUserModel();
+		
+		// in case of uncertainty profile:
+		if (userModel != null) {
+			if (receivedBid == null || lastOwnBid == null)
+				return Actions.Reject;
+			
+			List<Bid> bidOrder = userModel.getBidRanking().getBidOrder();
+			if (bidOrder.contains(receivedBid)) {
+				double percentile = (bidOrder.size() - bidOrder.indexOf(receivedBid)) / (double) bidOrder.size();
+				if (percentile < 0.1)
+					return Actions.Accept;
+			} else
+			{
+				//estimateUtility according to script in BoaParty
+				double utilOwn = negotiationSession.getUtilitySpace().getUtility(lastOwnBid);
+				double utilInc = negotiationSession.getUtilitySpace().getUtility(receivedBid);
+				if (utilOwn < utilInc)
+					return Actions.Accept;
+			}
+		}
 		double currentNegoTime = negotiationSession.getTime();
 		double timeWindow = 1 - currentNegoTime;
 		double t = 0.995;
