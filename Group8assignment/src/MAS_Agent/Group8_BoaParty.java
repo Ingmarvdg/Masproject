@@ -6,6 +6,8 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 
+import MAS_Agent.help_components.ExtensionUncertain;
+import genius.core.Bid;
 import genius.core.boaframework.AcceptanceStrategy;
 import genius.core.boaframework.BoaParty;
 import genius.core.boaframework.OMStrategy;
@@ -21,18 +23,7 @@ import genius.core.utility.AbstractUtilitySpace;
  * This example shows how BOA components can be made into an independent
  * negotiation party and which can handle preference uncertainty.
  * 
- * Note that this is equivalent to adding a BOA party via the GUI by selecting
- * the components and parameters. However, this method gives more control over
- * the implementation, as the agent designer can choose to override behavior
- * (such as handling preference uncertainty).
- * <p>
- * For more information, see: Baarslag T., Hindriks K.V., Hendrikx M.,
- * Dirkzwager A., Jonker C.M. Decoupling Negotiating Agents to Explore the Space
- * of Negotiation Strategies. Proceedings of The Fifth International Workshop on
- * Agent-based Complex Automated Negotiations (ACAN 2012), 2012.
- * https://homepages.cwi.nl/~baarslag/pub/Decoupling_Negotiating_Agents_to_Explore_the_Space_of_Negotiation_Strategies_ACAN_2012.pdf
- * 
- * @author Tim Baarslag
+ * For the course Multi-Agent system
  */
 @SuppressWarnings("serial")
 public class Group8_BoaParty extends BoaParty 

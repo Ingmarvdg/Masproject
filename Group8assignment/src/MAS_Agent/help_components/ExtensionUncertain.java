@@ -1,4 +1,4 @@
-package MAS_Agent;
+package MAS_Agent.help_components;
 
 import java.util.HashMap;
 import java.util.List;

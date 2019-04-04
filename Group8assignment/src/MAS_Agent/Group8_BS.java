@@ -12,6 +12,7 @@ import java.util.Map.Entry;
 import MAS_Agent.help_components.Fawkes_Offering;
 import MAS_Agent.help_components.Gahboninho_Offering;
 import MAS_Agent.help_components.NiceTitForTat_Offering;
+import MAS_Agent.help_components.TKI;
 import MAS_Agent.help_components.TheNegotiatorReloaded_Offering;
 import MAS_Agent.help_components.Yushu_Offering;
 import genius.core.Bid;
@@ -31,35 +32,35 @@ import genius.core.utility.AbstractUtilitySpace;
  */
 
 public class Group8_BS extends OfferingStrategy {
-//	/** Outcome space */
+	//	/** Outcome space */
 	private SortedOutcomeSpace outcomespace;
 	TKI tki = new TKI();
-	
+
 	/** Bidding strategies */
 	public List<OfferingStrategy> bid_methods = new ArrayList<OfferingStrategy>();
-	
+
 	/** Bidding weights for current bid */
 	public List<Double> bid_weights = new ArrayList<Double>();
-	
-	
+
+
 	/** Bidding utility space of current negotiation */
 	private AbstractUtilitySpace abstractUtilitySpace;
 
 	// counter
 	int counter = 0;
-	
 
-public Group8_BS() {
+
+	public Group8_BS() {
 		// TODO Auto-generated constructor stub
 	} 
 
 	/**
- 	* Initiate agents, weights for the bidding strategy
- 	*/
+	 * Initiate agents, weights for the bidding strategy
+	 */
 	@Override
 	public void init(NegotiationSession negoSession, OpponentModel model, OMStrategy oms,
 			Map<String, Double> parameters) throws Exception {
-		
+
 		this.negotiationSession = negoSession;
 		this.opponentModel 		= model;
 		this.omStrategy 		= oms;
@@ -71,54 +72,52 @@ public Group8_BS() {
 		bid_methods.add(new Yushu_Offering(negoSession, model, oms, parameters));
 		bid_methods.add(new NiceTitForTat_Offering(negoSession, model, oms, parameters));
 
-		// Initiate bidding weights, this needs to be replaced by TKI	
-		
-		
+		// Initiate bidding weights
 		bid_weights.add(0.2);         //FAWKES
 		bid_weights.add(0.190416149); //NEGO
 		bid_weights.add(0.197129227); //GAHBO
 		bid_weights.add(0.242762364); //YUSHU
 		bid_weights.add(0.169692259); //NICE
 
-		
+
 		outcomespace = new SortedOutcomeSpace(negotiationSession.getUtilitySpace());
 		negotiationSession.setOutcomeSpace(outcomespace);		
 	}
-	
-	
+
+
 	public void Weight() {
-		
+
 		//calculation of the weights based on opponent
 		double[] sd_coeff = new double[4];
 		double[] coop_coeff = new double[4];
 		double[] sd_cut = new double[4];
 		double[] coop_cut = new double[4];
 		//bid_weights.set(0, 0.3);
-		
+
 		sd_coeff[0] = 0.742159262; //NEGO
 		sd_coeff[1] = 1.105698694; //GABO
 		sd_coeff[2] = 1.46240313;  //YUSHU
 		sd_coeff[3] = -0.96443325; //NICE
-		
+
 		coop_coeff[0] = -0.343431038;
 		coop_coeff[1] = 0.859597362;
 		coop_coeff[2] = 1.29910522;
 		coop_coeff[3] = -3.074196406;
-		
+
 		sd_cut[0] = 0.832969372;
 		sd_cut[1] = 0.819401409;
 		sd_cut[2] = 0.689557158;
 		sd_cut[3] = 0.814648053;
-		
+
 		coop_cut[0] = 0.884449006;
 		coop_cut[1] = 1.105698694;
 		coop_cut[2] = 0.757832995;
 		coop_cut[3] = 0.775181624;
-		
+
 		double[] x = new double[4];
 		double stand_dev = TKI.standard_deviation();
 		double avg_coop = TKI.average_cooperat();
-		
+
 		for (int i = 0; i < 4 ; i++) {
 			x[i] = (sd_coeff[i] * stand_dev) + sd_cut[i];
 			double y = (coop_coeff[i] * avg_coop) + coop_cut[i];
@@ -132,7 +131,7 @@ public Group8_BS() {
 		bid_weights.set(2, coeff * x[1]);
 		bid_weights.set(3, coeff * x[2]);
 		bid_weights.set(4, coeff * x[3]);
-		
+
 	}
 	@Override
 	public BidDetails determineOpeningBid() {
@@ -166,9 +165,8 @@ public Group8_BS() {
 				bids.put(issue, bid_with_weight);	
 			}			
 		}
-		System.out.println(bids);
 
-		
+
 		// Get issues with highest overall weight
 		// If multiple with same values randomly pick one
 		int i = 1;
@@ -193,8 +191,8 @@ public Group8_BS() {
 
 
 	/**
- 	* To determine the utility for the offer we make
- 	*/
+	 * To determine the utility for the offer we make
+	 */
 	public void setAbstractUtilitySpace(AbstractUtilitySpace abstractUtilitySpace) {
 		this.abstractUtilitySpace = abstractUtilitySpace;
 	}

@@ -5,10 +5,12 @@ package MAS_Agent;
 
 import java.io.IOException;
 import java.util.HashSet;
-
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import MAS_Agent.help_components.TKI;
+import genius.core.Bid;
 //import genius.core.Bid;
 //import genius.core.issue.Issue;
 //import genius.core.issue.IssueDiscrete;
@@ -21,6 +23,7 @@ import genius.core.boaframework.OfferingStrategy;
 import genius.core.boaframework.OpponentModel;
 //import genius.core.utility.UtilitySpace;
 //import genius.core.utility.AdditiveUtilitySpace;
+import genius.core.uncertainty.UserModel;
 
 /**
  * This Acceptance Condition will accept an opponent bid if the utility is
@@ -71,19 +74,21 @@ public class Group8_AS extends AcceptanceStrategy {
 		return str;
 	}
 
+
 	@Override
 	public Actions determineAcceptability() {
+
 		// copied from AC_Uncertain to have our agent deal with preference uncertainty
 		Bid receivedBid = negotiationSession.getOpponentBidHistory()
 				.getLastBid();
 		Bid lastOwnBid = negotiationSession.getOwnBidHistory().getLastBid();
 		UserModel userModel = negotiationSession.getUserModel();
-		
+
 		// in case of uncertainty profile:
 		if (userModel != null) {
 			if (receivedBid == null || lastOwnBid == null)
 				return Actions.Reject;
-			
+
 			List<Bid> bidOrder = userModel.getBidRanking().getBidOrder();
 			if (bidOrder.contains(receivedBid)) {
 				double percentile = (bidOrder.size() - bidOrder.indexOf(receivedBid)) / (double) bidOrder.size();
@@ -145,8 +150,8 @@ public class Group8_AS extends AcceptanceStrategy {
 					return Actions.Accept;
 				}
 			} 
-//			else
-//				return Actions.Accept;
+			//			else
+			//				return Actions.Accept;
 		}
 		return Actions.Reject;
 	}

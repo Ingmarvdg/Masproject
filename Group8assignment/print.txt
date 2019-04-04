@@ -1,1 +1,1 @@
-Last Bid Utility = 0.9279255161862858---Standard Deviation = 0.12431932495756136---Average Cooperativness = 0.029550998582477117
+Last Bid Utility = 0.9279255161862858---Standard Deviation = 0.12229221848190001---Average Cooperativness = 0.0495890299996731
